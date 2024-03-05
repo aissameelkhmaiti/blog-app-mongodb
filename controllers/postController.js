@@ -3,10 +3,17 @@ const { validationResult } = require('express-validator');
 //creer post
 exports.createPost = async (req, res) => {
   try {
-    const newPost = new Post(req.body);
+const {name,content} = req.body;
+console.log(req.userId)
+    const newPost = new Post({
+      name,
+      content,
+      author :req.userId
+    });
     const post = await newPost.save();
     res.json({ post });
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Server Error' });
   }
 };

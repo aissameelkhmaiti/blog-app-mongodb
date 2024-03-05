@@ -7,8 +7,8 @@ const secretKey = 'raja';
 exports.registre = async (req, res) => {
   try {
     const newUser = new User(req.body);
-    const result = await newUser.save();
-    const token = jwt.sign({ userId: result.id, email: result.email }, secretKey, { expiresIn: '1h' });
+    const user = await newUser.save();
+    const token = jwt.sign({ userId: user.id, email: user.email ,role:user.role }, secretKey, { expiresIn: '1h' });
     res.json({ token });
   } catch (error) {
     res.status(500).json({ error: 'Server Error' });
@@ -21,7 +21,7 @@ exports.login = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && password === user.password) {
-    const token = jwt.sign({ userId: user.id, email: user.email }, secretKey, { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user.id, email: user.email ,role:user.role }, secretKey, { expiresIn: '1h' });
     res.json({ token });
   } else {
     res.status(401).json({ message: 'Invalid data' });

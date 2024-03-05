@@ -17,8 +17,9 @@ db.once('open', () => {
 });
 
 // Routes
-app.use('/', postRoutes);
 app.use('/', userRoutes);
+app.use('/', postRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
